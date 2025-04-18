@@ -115,30 +115,94 @@
 DROP TABLE IF EXISTS movie;
 DROP TABLE IF EXISTS actor;
 DROP TABLE IF EXISTS character;
-DROP TABLE IF EXISTS movie_charcater;
+DROP TABLE IF EXISTS movie_character;
+DROP TABLE IF EXISTS movie_database;
 
 -- Create new tables, according to your domain model
 
 CREATE TABLE movie(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
-    release INTEGER,
+    release TEXT,
     rating TEXT,
     studio TEXT
 );
 CREATE TABLE actor(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    movie_id INTEGER
+    full_name TEXT
 );
 CREATE TABLE movie_character(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    actor_id INTEGER,
-    movie_id INTEGER
+    character_name TEXT
+);
+
+CREATE TABLE movie_database(
+    movie_ID INTEGER,
+    actor_ID INTEGER,
+    movie_character INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
--- TODO!
+
+INSERT INTO movie(title, release, rating, studio)
+VALUES
+("Batman Begins", "2005", "PG-13","Warner Bros."),
+("The Dark Knight","2008","PG-13","Warner Bros."),
+("The Dark Knight Rises", "2012", "PG-13","Warner Bros.");
+
+INSERT INTO actor(full_name)
+VALUES
+("Christian Bale"),
+("Michael Caine"),
+("Liam Neeson"),
+("Katie Holmes"),
+("Gary Oldman"),
+("Heath Ledger"),
+("Aaron Eckhart"),
+("Maggie Gyllenhaal"),
+("Tom Hardy"),
+("Joseph Gordon-Levitt"),
+("Anne Hathaway");
+
+
+INSERT INTO movie_character(character_name)
+VALUES
+("Bruce Wayne"),
+("Alfred"),
+("Ra's Al Ghul"),
+("Rachel Dawes"),
+("Commissioner Gordon"),
+("Joker"),
+("Harvey Dent"),
+("Bane"),
+("John Blake"),
+("Selina Kyle");
+
+INSERT INTO movie_database(movie_ID,actor_ID,movie_character)
+VALUES
+-- Batman Begins
+(1, 1, 1), -- Christian Bale as Batman
+(1, 2, 2), -- Michael Caine as Alfred
+(1, 3, 3),  -- Liam Neeson as Ra's Al Ghul
+(1, 4, 4),  -- Katie Holmes as Rachel Dawes
+(1, 5, 5),  -- Gary Oldman as Commissioner Gordon
+
+-- The Dark Knight
+(2, 1, 1),  -- Christian Bale as Bruce Wayne
+(2, 2, 2),  -- Michael Caine as Alfred
+(2, 6, 6),  -- Heath Ledger as Joker
+(2, 7, 7),  -- Aaron Eckhart as Harvey Dent
+(2, 8, 4),  -- Maggie Gyllenhaal as Rachel Dawes
+
+-- The Dark Knight Rises
+(3, 1, 1),  -- Christian Bale as Bruce Wayne
+(3, 2, 2),  -- Michael Caine as Alfred
+(3, 5, 5),  -- Gary Oldman as Commissioner Gordon
+(3, 9, 8),  -- Tom Hardy as Bane
+(3, 10, 9), -- Joseph Gordon-Levitt as John Blake
+(3, 11, 10);-- Anne Hathaway as Selina Kyle
+
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -146,7 +210,8 @@ CREATE TABLE movie_character(
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
+
+SELECT * FROM movie;
 
 -- Prints a header for the cast output
 .print ""
@@ -156,4 +221,5 @@ CREATE TABLE movie_character(
 
 
 -- The SQL statement for the cast output
--- TODO!
+
+
