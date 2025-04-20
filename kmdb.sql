@@ -139,7 +139,7 @@ CREATE TABLE movie_character(
 CREATE TABLE movie_database(
     movie_ID INTEGER,
     actor_ID INTEGER,
-    movie_character INTEGER
+    character_ID INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -179,7 +179,7 @@ VALUES
 ("John Blake"),
 ("Selina Kyle");
 
-INSERT INTO movie_database(movie_ID,actor_ID,movie_character)
+INSERT INTO movie_database(movie_ID,actor_ID,character_ID)
 VALUES
 -- Batman Begins
 (1, 1, 1), -- Christian Bale as Batman
@@ -211,7 +211,12 @@ VALUES
 
 -- The SQL statement for the movies output
 
-SELECT * FROM movie;
+SELECT DISTINCT
+  movie.title,
+  movie.release,
+  movie.rating,
+  movie.studio
+FROM movie;
 
 -- Prints a header for the cast output
 .print ""
@@ -219,7 +224,17 @@ SELECT * FROM movie;
 .print "========"
 .print ""
 
-
 -- The SQL statement for the cast output
+SELECT
+  movie.title,
+  actor.full_name AS actor_full_name,
+  movie_character.character_name AS character_name
+FROM movie
+INNER JOIN movie_database ON movie_database.movie_ID = movie.id
+INNER JOIN actor ON movie_database.actor_ID = actor.id
+INNER JOIN movie_character ON movie_database.character_ID = movie_character.id
+ORDER BY
+  movie.release,
+  movie_character.id;
 
 
